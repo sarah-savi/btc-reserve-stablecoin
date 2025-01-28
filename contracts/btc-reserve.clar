@@ -142,7 +142,7 @@
         (sender-vault (default-to {
             btc-locked: u0,
             stablecoin-minted: u0,
-            last-update-height: block-height
+            last-update-height: stacks-block-height
         } (map-get? collateral-vaults tx-sender)))
     )
     (begin
@@ -151,7 +151,7 @@
         (map-set collateral-vaults tx-sender {
             btc-locked: (+ btc-amount (get btc-locked sender-vault)),
             stablecoin-minted: (get stablecoin-minted sender-vault),
-            last-update-height: block-height
+            last-update-height: stacks-block-height
         })
         (ok true)
     ))
@@ -176,7 +176,7 @@
         (map-set collateral-vaults tx-sender {
             btc-locked: (get btc-locked vault),
             stablecoin-minted: new-stable-amount,
-            last-update-height: block-height
+            last-update-height: stacks-block-height
         })
         
         ;; Update balances safely
@@ -201,7 +201,7 @@
         (map-set collateral-vaults tx-sender {
             btc-locked: (get btc-locked vault),
             stablecoin-minted: (- (get stablecoin-minted vault) amount),
-            last-update-height: block-height
+            last-update-height: stacks-block-height
         })
         (map-set stablecoin-balances tx-sender (- current-stable-balance amount))
         (var-set total-supply (- (var-get total-supply) amount))
